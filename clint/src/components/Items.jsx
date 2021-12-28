@@ -9,13 +9,13 @@ const [item,setitem] = useState({name:"" , price:""});
 const [show,setshow] = useState(false);
 
 // useEffect this will help us to render all the required data when the component was mounted 
-useEffect(async () => {
+// useEffect( () => {
 
-       await axios.get("http://localhost:5000/item").then(res=>{
-            setitems(res.data);
-        })
+        // axios.get("http://localhost:5000/item").then(res=>{
+        //     setitems(res.data);
+        // })
   
-},[additem]);
+// },[additem]);
 
 // this is for collecting the data from user to save in database
 
@@ -27,17 +27,25 @@ useEffect(async () => {
 
 //   this is for sending data through api Axios
 async function additem(){
-        
         if(item.name && item.price){
            await axios.post("http://localhost:5000/item",item).then(res=>{
                 alert(res.data);
                 setshow(false);
             });
+
+            axios.get("http://localhost:5000/item").then(res=>{
+                setitems(res.data);
+            })
+
         }else{
             alert("values cannot be empty");
-}};
+}
+};
 
      function showadditem(){
+        axios.get("http://localhost:5000/item").then(res=>{
+            setitems(res.data);
+        })
          setshow(prev=>{
              return !prev
          });

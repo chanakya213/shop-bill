@@ -6,7 +6,6 @@ import Mybills from "./Mybills";
 import Sales from "./Sales";
 
 function Newbill(){
-
     // collecting data through api
     const [items,setitems] = useState([]);
     // stores user entered values
@@ -18,11 +17,11 @@ function Newbill(){
     //this is the data where we colect from the database 
     const [billitems,setbillitems] = useState([]);
 
-    useEffect(async() => {
-        await axios.get("http://localhost:5000/item").then(res=>{
-            setitems(res.data);
-        })
-    }, [additem]);
+    // useEffect(async() => {
+    //     await axios.get("http://localhost:5000/item").then(res=>{
+    //         setitems(res.data);
+    //     })
+    // }, [additem]);
 
     function handlechange(e){
         setitem(prev=>{
@@ -30,6 +29,12 @@ function Newbill(){
         })
     };
  function showadditem(){
+    axios.get("http://localhost:5000/item").then(res=>{
+        setitems(res.data);
+    })
+    axios.get("http://localhost:5000/bills").then(res=>{
+        setbillitems(res.data);
+    })
      setshow(prev=>{
          return !prev ;
      })
@@ -49,11 +54,11 @@ function additem(e){
   }
 };
 
-useEffect(() => {
-    axios.get("http://localhost:5000/bills").then(res=>{
-        setbillitems(res.data);
-    })
-}, [checkout]);
+// useEffect(() => {
+//     axios.get("http://localhost:5000/bills").then(res=>{
+//         setbillitems(res.data);
+//     })
+// }, [checkout]);
 
 function checkout(){
   const random =  Math.floor((Math.random() * 1000) + 1);
@@ -67,9 +72,18 @@ function checkout(){
  axios.post("http://localhost:5000/bills",{billname:"BILL0000"+random ,billdate:now,billprice:sum}).then(res=>{
      alert(res.data);
  })
+setTimeout(() => {
+    axios.get("http://localhost:5000/bills").then(res=>{
+        setbillitems(res.data);
+    })
+}, 2000);
+
 }
 
 function clear(){
+    axios.get("http://localhost:5000/bills").then(res=>{
+        setbillitems(res.data);
+    })
     setnewitem([]);
 }  
  const finalvalue = billitems.reduce((acc,curr)=>{
