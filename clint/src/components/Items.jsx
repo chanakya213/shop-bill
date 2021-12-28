@@ -32,10 +32,11 @@ async function additem(){
                 alert(res.data);
                 setshow(false);
             });
-
+        setTimeout(() => {
             axios.get("http://localhost:5000/item").then(res=>{
                 setitems(res.data);
             })
+        }, 2000);
 
         }else{
             alert("values cannot be empty");

@@ -76,6 +76,7 @@ setTimeout(() => {
     axios.get("http://localhost:5000/bills").then(res=>{
         setbillitems(res.data);
     })
+    setnewitem([]);
 }, 2000);
 
 }
